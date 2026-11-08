@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create AI Studio V3</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #090914;
+  color: white;
+  min-height: 100vh;
+  padding: 22px;
+}
+
+.container {
+  max-width: 650px;
+  margin: auto;
+}
+
+header {
+  text-align: center;
+  padding: 30px 10px;
+}
+
+header h1 {
+  font-size: 32px;
+  background: linear-gradient(90deg,#a855f7,#38bdf8);
+  background-clip: text;
+  color: transparent;
+}
+
+header p {
+  color: #aaa;
+  margin-top: 10px;
+}
+
+.panel {
+  background: #151526;
+  border: 1px solid #292944;
+  padding: 22px;
+  border-radius: 18px;
+}
+
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.tabs button {
+  flex: 1;
+  padding: 13px;
+  border: 0;
+  border-radius: 10px;
+  background: #292943;
+  color: white;
+  font-weight: bold;
+}
+
+.tabs button.active {
+  background: #853df5;
+}
+
+label {
+  display: block;
+  margin: 16px 0 9px;
+  font-weight: bold;
+}
+
+textarea, select {
+  width: 100%;
+  padding: 14px;
+  background: #0d0d1b;
+  border: 1px solid #393957;
+  border-radius: 10px;
+  color: white;
+  font-size: 15px;
+}
+
+textarea {
+  min-height: 125px;
+  resize: vertical;
+}
+
+.generate {
+  width: 100%;
+  padding: 16px;
+  margin-top: 22px;
+  background: linear-gradient(90deg,#853df5,#2563eb);
+  border: 0;
+  border-radius: 12px;
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+#status {
+  color: #c4b5fd;
+  margin-top: 18px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.preview {
+  margin-top: 20px;
+  min-height: 100px;
+  padding: 15px;
+  border: 1px dashed #555;
+  border-radius: 12px;
+  color: #aaa;
+  overflow-wrap: anywhere;
+}
+
+footer {
+  text-align: center;
+  color: #666;
+  font-size: 12px;
+  margin-top: 25px;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<header>
+  <h1>CREATE AI STUDIO</h1>
+  <p>Your creative AI workspace</p>
+</header>
+
+<div class="panel">
+
+  <div class="tabs">
+    <button id="imageTab" class="active" onclick="setMode('image')">
+      Image AI
+    </button>
+
+    <button id="videoTab" onclick="setMode('video')">
+      Video AI
+    </button>
+  </div>
+
+  <label for="prompt">Describe your creation</label>
+  <textarea id="prompt" placeholder="Example: A cinematic 3D stickman walking through a futuristic city..."></textarea>
+
+  <label for="style">Choose a style</label>
+  <select id="style">
+    <option value="Cinematic">Cinematic</option>
+    <option value="3D Animation">3D Animation</option>
+    <option value="Realistic">Realistic</option>
+    <option value="Anime">Anime</option>
+    <option value="Minimalist">Minimalist</option>
+  </select>
+
+  <button class="generate" onclick="generate()">
+    ✨ Generate
+  </button>
+
+  <div id="status">Ready to create.</div>
+
+  <div class="preview" id="preview">
+    Your generated content will appear here.
+  </div>
+
+</div>
+
+<footer>
+  CREATE AI STUDIO V3 • YOUR CREATIVE SPACE
+</footer>
+
+</div>
+
+<script>
+let mode = "image";
+
+function setMode(selected) {
+  mode = selected;
+
+  document.getElementById("imageTab")
+    .classList.toggle("active", mode === "image");
+
+  document.getElementById("videoTab")
+    .classList.toggle("active", mode === "video");
+
+  document.getElementById("status").textContent =
+    mode === "image" ? "Image mode selected." : "Video mode selected.";
+}
+
+function generate() {
+  const prompt = document.getElementById("prompt").value.trim();
+  const style = document.getElementById("style").value;
+  const status = document.getElementById("status");
+  const preview = document.getElementById("preview");
+
+  if (!prompt) {
+    status.textContent = "Please enter a prompt first.";
+    return;
+  }
+
+  const fullPrompt = style + " style: " + prompt;
+
+  status.textContent =
+    "Your prompt is ready. Generation engine is not connected yet.";
+
+  preview.textContent =
+    "Mode: " + mode.toUpperCase() +
+    "\n\nPrompt: " + fullPrompt;
+}
+</script>
+
+</body>
+</html>
